@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="Productivity"
+            id="com.alenribic.atodo">
+      </category>
+      <view
+            name="ATodo"
+            icon="icons/atodo.gif"
+            category="com.alenribic.atodo"
+            class="com.alenribic.atodo.views.ATodoView"
+            id="com.alenribic.atodo.views.ATodoView">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="com.alenribic.atodo.preferences.ATodoPreferencePage"
+            id="com.alenribic.atodo.preferences.ATodoPreferencePage"
+            name="ATodo">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="com.alenribic.atodo.preferences.PreferenceInitializer">
+      </initializer>
+   </extension>
+
+</plugin>

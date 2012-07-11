@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="plugin_export" name="build">
+	<target name="plugin_export">
+
+		<!-- Define build directories -->
+		<property name="build.root" location="../../ATodo" />
+		<property name="build.temp" location="${build.root}/temp" />
+		<property name="build.out" location="${build.root}/product" />
+
+		<!-- Create build directories -->
+		<delete dir="${build.temp}" />
+		<mkdir dir="${build.temp}" />
+		<mkdir dir="${build.out}" />
+
+		<!-- Read the MANIFEST.MF -->
+		<copy file="META-INF/MANIFEST.MF" todir="${build.temp}" />
+		<replace file="${build.temp}/MANIFEST.MF">
+			<replacefilter token=":=" value="=" />
+			<replacefilter token=":" value="=" />
+			<replacetoken>;</replacetoken>
+			<replacevalue>
+			</replacevalue>
+		</replace>
+		<property file="${build.temp}/MANIFEST.MF" />
+
+		<!-- Plugin locations -->
+		<property name="plugin.jarname"
+		          value="${Bundle-SymbolicName}_${Bundle-Version}" />
+		<property name="plugin.jar"
+		          location="${build.temp}/jars/plugins/${plugin.jarname}.jar" />
+		<property name="product.zip"
+		          value="${build.out}/ATodo_v${Bundle-Version}.zip" />
+
+		<!-- Assemble plug-in jar -->
+		<mkdir dir="${build.temp}/jars/plugins" />
+		<zip destfile="${plugin.jar}">
+			<zipfileset dir="bin" />
+			<zipfileset dir="." includes="META-INF/MANIFEST.MF" />
+			<zipfileset dir="." includes="plugin.xml" />
+			<zipfileset dir="." includes="icons/*.gif" />
+			<zipfileset dir="." includes="src/**/*" />
+		</zip>
+
+		<!-- Assemble the product zip -->
+		<zip destfile="${product.zip}">
+			<fileset dir="${build.temp}/jars" />
+		</zip>
+
+	</target>
+</project>
